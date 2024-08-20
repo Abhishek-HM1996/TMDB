@@ -1,0 +1,43 @@
+
+.detail_movie_page{
+    background-color: #afadad;
+    padding-bottom: 50px;
+}
+.movie {
+    width: 100%;
+    position: relative;
+}
+.banner_title_favourite{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.movie__backdrop {
+    width: 100%;
+    height: 400px;
+}
+
+.image_overlay{
+    position: absolute;
+    bottom: 0;
+    background-image: linear-gradient(rgb(0,0,0,0), rgb(0,0,0,1));
+    width: 100%;
+}
+
+.bannerImage__title {
+    font-weight: 800;
+    font-size: 4rem;
+    margin-bottom: 0.4rem;
+    text-align: left;
+}
+
+.bannerImage__description {
+    font-style: italic;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    display: flex;
+    text-align: left;
+    width: 70%;
+}
+
