@@ -1,6 +1,5 @@
 
 .detail_movie_page{
-    background-color: #afadad;
     padding-bottom: 50px;
 }
 .movie {
@@ -23,6 +22,7 @@
     bottom: 0;
     background-image: linear-gradient(rgb(0,0,0,0), rgb(0,0,0,1));
     width: 100%;
+    height:12rem
 }
 
 .bannerImage__title {

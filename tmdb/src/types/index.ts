@@ -14,7 +14,8 @@ export interface trendingMovieDataType{
     "video": boolean,
     "vote_average": number|null,
     "vote_count": number|null,
-    "favourite": boolean
+    "favourite": boolean,
+    "isCalled":boolean
 }
 
 export interface trendingMovieDetailType{

@@ -4,6 +4,7 @@ import SignIn from './SignIn';
 import Home from '../Home';
 import Detail from '../Detail';
 import Header from '../Header';
+import Favourite from '../Favourite';
 
 
 const AppRoutes = () => {
@@ -13,6 +14,7 @@ const AppRoutes = () => {
       <Header/>
         <Routes>
           <Route path="/home" element={<Home/>} />
+          <Route path="/movies/favourite" element={<Favourite/>} />
           <Route path='movies/details/:id' element={<Detail/>} />
           <Route path="/*" element={<SignIn />} />
         </Routes>

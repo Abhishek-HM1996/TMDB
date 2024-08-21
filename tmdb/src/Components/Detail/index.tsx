@@ -4,27 +4,52 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { trendingMovieDataType } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
-import { getMovieDetails, reset } from "../../redux/slices/movieDetailsSlice";
+import { getMovieDetails, reset, setMovieDetails } from "../../redux/slices/movieDetailsSlice";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { IMG_BASE_URL } from "../../constants";
+import { setPopularMovies } from "../../redux/slices/popularMovieSlice";
+import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { setMovies } from "../../redux/slices/trendingMovieSlice";
+import ProtectedRoute from "../ProtectedHoc";
 
 export const Detail = () => {
   let { id } = useParams();
+  const [searchParams] = useSearchParams();
+  let favourite = searchParams.get('favourite');
+  const navigate=useNavigate()
   const dispatch = useDispatch();
   const details = useSelector((state: any) => state.movieDetails);
+  const popularMovies = useSelector((state:any) => state.popular);
+  const trendingMovies = useSelector((state: any) => state.trending);
 
   useEffect(() => {
+    if(id)
     dispatch(getMovieDetails({id}));
 
     return ()=>{
       dispatch(reset())
     }
-  }, []);
-  console.log(details)
+  }, [id]);
 
-  function handleFavouriteClick(id: number) {
-    
+  function handleFavouriteClick(movieId:number) {  
+    let favourites;
+    dispatch(setPopularMovies(popularMovies?.movies?.map((item:trendingMovieDataType)=>{
+      if(item?.id==movieId){
+        favourites=!item?.favourite;
+        return {...item,favourite:!item?.favourite}
+      }
+      return item;
+})))
+dispatch(setMovies(trendingMovies?.movies?.map((item:trendingMovieDataType)=>{
+  if(item?.id==movieId){
+    favourites=!item?.favourite;
+    return {...item,favourite:!item?.favourite}
+  }
+  return item;
+}))) 
+   navigate(`/movies/details/${id}?favourite=${favourites}`)
   }
 
   return (
@@ -40,16 +65,16 @@ export const Detail = () => {
         <Box className="banner_title_favourite" >
         <Box className="bannerImage__title">{details?.title}</Box>
         <Box mr={4}>
-        {true ? (
+        {(favourite=="true" )? (
             <FavoriteIcon onClick={(e)=>{
               e.stopPropagation();
-              handleFavouriteClick(23)
+              handleFavouriteClick(details?.id)
 
             }} style={{ color: "red" }} />
           ) : (
             <FavoriteBorderIcon onClick={(e)=>{
               e.stopPropagation();
-              handleFavouriteClick(0)
+              handleFavouriteClick(details?.id)
 
             }} style={{ color: "white" }} />
           )}
@@ -67,4 +92,4 @@ export const Detail = () => {
     </Box>
   );
 };
-export default Detail;
+export default ProtectedRoute(Detail);

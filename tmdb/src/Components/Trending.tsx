@@ -1,33 +1,41 @@
-import { Box, Grid, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import { Box,Typography } from "@mui/material";
+import  { useEffect } from "react";
 import MovieCard from "./MovieCard";
-import { get } from "../ApiService/Get";
-import { TRENDING_MOVIES_ENDPOINT } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovies, setMovies } from "../redux/slices/trendingMovieSlice";
 import { trendingMovieDataType } from "../types";
 import { useNavigate } from "react-router";
+import { setPopularMovies } from "../redux/slices/popularMovieSlice";
 
 const Trending = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const trendingMovies = useSelector((state: any) => state.trending);
+  const popularMovies = useSelector((state:any) => state.popular);
 
   useEffect(() => {
+    if(!trendingMovies?.isCalled)
     dispatch(getMovies());
   }, []);
 
   function handleFavouriteClick(id: number) {
-    dispatch(setMovies(trendingMovies?.map((item:trendingMovieDataType)=>{
+
+    dispatch(setMovies(trendingMovies?.movies?.map((item:trendingMovieDataType)=>{
           if(item?.id==id){
             return {...item,favourite:!item?.favourite}
           }
           return item;
     })))
+    dispatch(setPopularMovies(popularMovies?.movies?.map((item:trendingMovieDataType)=>{
+      if(item?.id==id){
+        return {...item,favourite:!item?.favourite}
+      }
+      return item;
+})))
   }
 
-  function handleCardClick(id: number) {
-    navigate(`/movies/details/${id}`)
+  function handleCardClick(id: number,favourite:boolean) {
+    navigate(`/movies/details/${id}?favourite=${favourite}`)
   }
 
   return (
@@ -51,8 +59,8 @@ const Trending = () => {
           },
         }}
       >
-        {trendingMovies?.length > 0 &&
-          trendingMovies?.map((item: trendingMovieDataType) => {
+        {trendingMovies?.movies?.length > 0 &&
+          trendingMovies?.movies?.map((item: trendingMovieDataType) => {
             return (
               <MovieCard
                 id={item?.id}

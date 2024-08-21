@@ -10,7 +10,7 @@ interface movieDetails {
   title: string;
   favourite: boolean;
   handleFavouriteClick:(id:number)=>void;
-  handleCardClick:(id:number)=>void;
+  handleCardClick:(id:number,fav:boolean)=>void;
   id:number|null;
 }
 
@@ -28,7 +28,7 @@ const MovieCard = ({id, url, rating, title, favourite ,handleFavouriteClick,hand
         border: "1px solid grey",
       }}
       onClick={(e)=>{
-        handleCardClick(id?id:0)
+        handleCardClick(id?id:0,favourite)
       }}
     >
       <img

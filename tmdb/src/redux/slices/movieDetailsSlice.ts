@@ -21,6 +21,7 @@ const movieDetailsSlice = createSlice({
     },
     setMovieDetails:(state,action: PayloadAction<trendingMovieDetailType>)=>{
      state=action.payload
+     state.favourite=false
      
      return state
     },

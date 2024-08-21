@@ -2,23 +2,10 @@ import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 import {trendingMovieDataType} from "../../types";
 import { boolean } from 'yargs';
 
-const initialState:trendingMovieDataType={
-    "backdrop_path": "",
-    "id": null,
-    "title": "",
-    "original_title": "",
-    "overview": "",
-    "poster_path": "",
-    "media_type": "",
-    "adult": false,
-    "original_language": "en",
-    "genre_ids": [],
-    "popularity": null,
-    "release_date": "",
-    "video": false,
-    "vote_average": null,
-    "vote_count": null,
-    "favourite":false
+const initialState:{movies:trendingMovieDataType[],isCalled:boolean,loader:boolean}={
+    movies:[],
+    isCalled:false,
+    loader:false,
   }
 
 const popularMovieSlice = createSlice({
@@ -26,13 +13,17 @@ const popularMovieSlice = createSlice({
   initialState,
   reducers: {
     getMovies: (state) => {
+      state.loader=true
     },
-    setMovies:(state,action: PayloadAction<trendingMovieDataType>)=>{
-     state=action.payload
+    setPopularMovies:(state,action: PayloadAction<any>)=>{
+     state.movies=action.payload;
+     console.log("popular")
+     state.isCalled=true;
+     state.loader=false
      return state
     }
   },
 });
 
-export const { getMovies,setMovies} = popularMovieSlice.actions;
+export const { getMovies,setPopularMovies} = popularMovieSlice.actions;
 export default popularMovieSlice.reducer;

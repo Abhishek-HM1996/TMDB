@@ -3,6 +3,7 @@ import React from 'react'
 import Header from '../Header'
 import Trending from '../Trending'
 import PopularMovieCarousel from '../MovieCarousel'
+import ProtectedRoute from '../ProtectedHoc'
 
 const Home = () => {
   return (
@@ -15,4 +16,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default ProtectedRoute(Home);
