@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -10,12 +9,18 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { validateEmail, validatePassword } from '../../utils';
 import { useNavigate } from "react-router-dom";
+import { HOME, LOCAL_STORAGE_USER_ID, PASSWORD_WRONG_TEXT, VALID_EMAIL_TEXT } from '../../constants';
 
 
-export default function SignIn() {
+
+  function SignIn() {
 
   const [errorInfo,setErroInfo]= useState({error:"",errorInfo:""})
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    navigate('/')
+  },[])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,14 +28,14 @@ export default function SignIn() {
     const email =(data.get('email') as string) || '';
     const pwd = (data?.get('password')as string) || '';
      if(!validateEmail(email)) {
-        setErroInfo({error:"email",errorInfo:"Please enter a valid email"})
+        setErroInfo({error:"email",errorInfo:VALID_EMAIL_TEXT})
      }
      else if(!validatePassword(pwd)) {
-        setErroInfo({error:"password",errorInfo:"Password should have 6 characters & should contain atleast 1 upper case,1 lower case,1 spcl char,1 numeric"})
+        setErroInfo({error:"password",errorInfo:PASSWORD_WRONG_TEXT})
      }
      else{
-        localStorage.setItem("user_id",`${email}${pwd}`)
-        navigate('/home')
+        localStorage.setItem(LOCAL_STORAGE_USER_ID,`${email}${pwd}`)
+        navigate(HOME)
      }
 
   };
@@ -66,6 +71,7 @@ export default function SignIn() {
               error={errorInfo?.error=="email"}
               helperText={errorInfo?.error=="email" && errorInfo?.errorInfo}
               onFocus={()=>setErroInfo({error:"",errorInfo:""})}
+              data-testid={"email"}
             />
             <TextField
               margin="normal"
@@ -79,12 +85,14 @@ export default function SignIn() {
               error={errorInfo?.error=="password"}
               helperText={errorInfo?.error=="password" && errorInfo?.errorInfo}
               onFocus={()=>setErroInfo({error:"",errorInfo:""})}
+              data-testid={"password"}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              data-testid={"sign-in-button"}
             >
               Sign In
             </Button>
@@ -93,3 +101,4 @@ export default function SignIn() {
       </Container>
   );
 }
+export default SignIn;

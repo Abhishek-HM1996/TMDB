@@ -17,13 +17,16 @@ const popularMovieSlice = createSlice({
     },
     setPopularMovies:(state,action: PayloadAction<any>)=>{
      state.movies=action.payload;
-     console.log("popular")
      state.isCalled=true;
      state.loader=false
      return state
+    },
+    resetPopularMovies:(state)=>{
+      state.isCalled=false;
     }
   },
+  
 });
 
-export const { getMovies,setPopularMovies} = popularMovieSlice.actions;
+export const { getMovies,setPopularMovies,resetPopularMovies} = popularMovieSlice.actions;
 export default popularMovieSlice.reducer;

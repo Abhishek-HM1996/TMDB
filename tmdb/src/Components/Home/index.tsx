@@ -1,7 +1,5 @@
 import { Box } from '@mui/material'
-import React from 'react'
-import Header from '../Header'
-import Trending from '../Trending'
+import Trending from './Trending'
 import PopularMovieCarousel from '../MovieCarousel'
 import ProtectedRoute from '../ProtectedHoc'
 

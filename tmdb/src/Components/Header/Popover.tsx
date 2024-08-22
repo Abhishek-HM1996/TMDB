@@ -5,9 +5,14 @@ import Button from "@mui/material/Button";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { LOCAL_STORAGE_USER_ID } from "../../constants";
+import { useDispatch } from "react-redux";
+import { resetTrendingrMovies } from "../../redux/slices/trendingMovieSlice";
+import { resetPopularMovies } from "../../redux/slices/popularMovieSlice";
 
 export default function Popover() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
@@ -17,6 +22,8 @@ export default function Popover() {
   };
 
   const handleClose = () => {
+    dispatch(resetTrendingrMovies())
+    dispatch(resetPopularMovies())
     setAnchorEl(null);
   };
 
@@ -28,6 +35,7 @@ export default function Popover() {
       <Button aria-describedby={id} onClick={handleClick}>
         <AccountCircleOutlinedIcon
           style={{ color: "#d7caca", fontSize: "35px" }}
+          data-testid={"user-icon"}
         />
       </Button>
       <MuiPopover
@@ -42,7 +50,7 @@ export default function Popover() {
       >
         <Typography
           onClick={() => {
-            localStorage.removeItem("user_id");
+            localStorage.removeItem(LOCAL_STORAGE_USER_ID);
             handleClose()
             navigate('/')
           }}

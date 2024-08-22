@@ -1,13 +1,12 @@
-import React, { ReactNode } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import SignIn from './Routes/SignIn';
+import { LOCAL_STORAGE_USER_ID } from '../constants';
 
 
 
 const ProtectedRoute = (WrappedComponent:any) => {
     return ()=>{
-        const user = localStorage.getItem('user_id');
-      
+        const user = localStorage.getItem(LOCAL_STORAGE_USER_ID);
+
         if (!user) {
           return <SignIn/>
         }

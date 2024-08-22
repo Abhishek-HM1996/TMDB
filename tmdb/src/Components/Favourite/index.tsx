@@ -1,5 +1,4 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React, { useEffect } from "react";
 import MovieCard from "../MovieCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setMovies } from "../../redux/slices/trendingMovieSlice";
@@ -7,14 +6,13 @@ import { trendingMovieDataType } from "../../types";
 import { setPopularMovies } from "../../redux/slices/popularMovieSlice";
 import { useNavigate } from "react-router-dom";
 import ProtectedRoute from "../ProtectedHoc";
+import { NO_DATA_TEXT } from "../../constants";
 
 const Favourite = () => {
   const trendingMovies = useSelector((state: any) => state.trending);
   const popularMovies = useSelector((state: any) => state.popular);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
- 
 
   function handleFavouriteClick(id: number) {
     dispatch(
@@ -39,16 +37,20 @@ const Favourite = () => {
     );
   }
 
-  return (
-    [...trendingMovies?.movies, ...popularMovies?.movies]?.length>0?<Box ml={3}>
+  const favouriteItems=[...trendingMovies?.movies, ...popularMovies?.movies]
+  ?.filter(
+    (item, index, self) =>
+      item?.favourite &&
+      index == self.findIndex((t) => t.id === item.id)
+  )
+
+  return favouriteItems?.length > 0 ? (
+    <Box ml={3}>
       <Typography my={2} ml={1} variant="h4" style={{ fontFamily: "auto" }}>
         My Favourites
       </Typography>
       <Grid container rowGap={3}>
-        {[...trendingMovies?.movies, ...popularMovies?.movies]
-          ?.filter((item,index,self) => item?.favourite && (index==self.findIndex((t) => (
-            t.id === item.id
-          ))))
+        {favouriteItems
           ?.map((item) => (
             <Grid item xs={3}>
               <MovieCard
@@ -69,7 +71,11 @@ const Favourite = () => {
             </Grid>
           ))}
       </Grid>
-    </Box>:<Box mt={10} sx={{textAlign:'center'}} >{"No data found"}</Box>
+    </Box>
+  ) : (
+    <Box mt={10} sx={{ textAlign: "center" }}>
+      {NO_DATA_TEXT}
+    </Box>
   );
 };
 

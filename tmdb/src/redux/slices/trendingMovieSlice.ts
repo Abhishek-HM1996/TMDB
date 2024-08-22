@@ -14,12 +14,14 @@ const trendingMovieSlice = createSlice({
     },
     setMovies:(state,action: PayloadAction<any>)=>{
      state.movies=action.payload
-     console.log("trending",action.payload)
      state.isCalled=true;
      return state
+    },
+    resetTrendingrMovies:(state)=>{
+      state.isCalled=false;
     }
   },
 });
 
-export const { getMovies,setMovies} = trendingMovieSlice.actions;
+export const { getMovies,setMovies,resetTrendingrMovies} = trendingMovieSlice.actions;
 export default trendingMovieSlice.reducer;

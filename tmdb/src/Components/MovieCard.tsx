@@ -1,5 +1,4 @@
-import { Box, Card, CardMedia, Typography } from "@mui/material";
-import React from "react";
+import { Box, Card, Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { IMG_BASE_URL } from "../constants";
@@ -30,16 +29,16 @@ const MovieCard = ({id, url, rating, title, favourite ,handleFavouriteClick,hand
       onClick={(e)=>{
         handleCardClick(id?id:0,favourite)
       }}
+      data-testid={"movie-card"}
     >
       <img
         height={"80%"}
         width={"100%"}
         src={`${IMG_BASE_URL}/${url}`}
         alt={`Card`}
-        //style={{opacity:'0.5'}}
       />
       <Box px={2}>
-        <Typography color={"white"}>{title}</Typography>
+        <Typography  color={"white"}>{title}</Typography>
         <Box
           sx={{
             display: "flex",
@@ -51,13 +50,13 @@ const MovieCard = ({id, url, rating, title, favourite ,handleFavouriteClick,hand
             style={{ fontSize: "12px", color: "lightgray" }}
           >{`Rating - ${rating?.toFixed(1)}`}</Typography>
           {favourite ? (
-            <FavoriteIcon onClick={(e)=>{
+            <FavoriteIcon data-testid='favourite-icon' onClick={(e)=>{
               e.stopPropagation();
               handleFavouriteClick(id?id:0)
 
             }} style={{ color: "red" }} />
           ) : (
-            <FavoriteBorderIcon onClick={(e)=>{
+            <FavoriteBorderIcon data-testid={"favourite-icon"} onClick={(e)=>{
               e.stopPropagation();
               handleFavouriteClick(id?id:0)
 

@@ -1,11 +1,11 @@
 import { Box,Typography } from "@mui/material";
 import  { useEffect } from "react";
-import MovieCard from "./MovieCard";
+import MovieCard from "../MovieCard";
 import { useDispatch, useSelector } from "react-redux";
-import { getMovies, setMovies } from "../redux/slices/trendingMovieSlice";
-import { trendingMovieDataType } from "../types";
+import { getMovies, setMovies } from "../../redux/slices/trendingMovieSlice";
+import { trendingMovieDataType } from "../../types";
 import { useNavigate } from "react-router";
-import { setPopularMovies } from "../redux/slices/popularMovieSlice";
+import { setPopularMovies } from "../../redux/slices/popularMovieSlice";
 
 const Trending = () => {
   const dispatch = useDispatch();
