@@ -52,7 +52,7 @@ const Favourite = () => {
       <Grid container rowGap={3}>
         {favouriteItems
           ?.map((item) => (
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={4} md={3}>
               <MovieCard
                 id={item?.id}
                 url={item?.backdrop_path}

@@ -1,4 +1,4 @@
-import { Box,Typography } from "@mui/material";
+import { Box,Typography,Grid } from "@mui/material";
 import  { useEffect } from "react";
 import MovieCard from "../MovieCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,20 +49,12 @@ const Trending = () => {
       >
         Trending Movies
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          overflowX: "auto",
-          whiteSpace: "nowrap",
-          "&::-webkit-scrollbar": {
-            display: "none",
-          },
-        }}
-      >
-        {trendingMovies?.movies?.length > 0 &&
+      <Grid container rowGap={3}>
+      {trendingMovies?.movies?.length > 0 &&
           trendingMovies?.movies?.map((item: trendingMovieDataType) => {
             return (
-              <MovieCard
+              <Grid item xs={12} sm={4} md={3} >
+                <MovieCard
                 id={item?.id}
                 url={item?.poster_path}
                 title={item?.title}
@@ -71,9 +63,11 @@ const Trending = () => {
                 handleFavouriteClick={handleFavouriteClick}
                 handleCardClick={handleCardClick}
               />
+              </Grid>
+              
             );
           })}
-      </Box>
+      </Grid>
     </Box>
   );
 };

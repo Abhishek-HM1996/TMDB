@@ -8,26 +8,34 @@ interface movieDetails {
   rating: number | null;
   title: string;
   favourite: boolean;
-  handleFavouriteClick:(id:number)=>void;
-  handleCardClick:(id:number,fav:boolean)=>void;
-  id:number|null;
+  handleFavouriteClick: (id: number) => void;
+  handleCardClick: (id: number, fav: boolean) => void;
+  id: number | null;
 }
 
-const MovieCard = ({id, url, rating, title, favourite ,handleFavouriteClick,handleCardClick}: movieDetails) => {
+const MovieCard = ({
+  id,
+  url,
+  rating,
+  title,
+  favourite,
+  handleFavouriteClick,
+  handleCardClick,
+}: movieDetails) => {
   return (
     <Card
       raised={true}
       sx={{
         margin: "0 8px",
-        flexShrink: 0, 
+        flexShrink: 0,
         padding: 0,
         height: "300px",
-        width: "260px",
+        //width: "260px",
         background: "#343434",
         border: "1px solid grey",
       }}
-      onClick={(e)=>{
-        handleCardClick(id?id:0,favourite)
+      onClick={(e) => {
+        handleCardClick(id ? id : 0, favourite);
       }}
       data-testid={"movie-card"}
     >
@@ -38,7 +46,18 @@ const MovieCard = ({id, url, rating, title, favourite ,handleFavouriteClick,hand
         alt={`Card`}
       />
       <Box px={2}>
-        <Typography  color={"white"}>{title}</Typography>
+        <Typography
+          sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: "vertical",
+          }}
+          color={"white"}
+        >
+          {title}
+        </Typography>
         <Box
           sx={{
             display: "flex",
@@ -50,17 +69,23 @@ const MovieCard = ({id, url, rating, title, favourite ,handleFavouriteClick,hand
             style={{ fontSize: "12px", color: "lightgray" }}
           >{`Rating - ${rating?.toFixed(1)}`}</Typography>
           {favourite ? (
-            <FavoriteIcon data-testid='favourite-icon' onClick={(e)=>{
-              e.stopPropagation();
-              handleFavouriteClick(id?id:0)
-
-            }} style={{ color: "red" }} />
+            <FavoriteIcon
+              data-testid="favourite-icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleFavouriteClick(id ? id : 0);
+              }}
+              style={{ color: "red" }}
+            />
           ) : (
-            <FavoriteBorderIcon data-testid={"favourite-icon"} onClick={(e)=>{
-              e.stopPropagation();
-              handleFavouriteClick(id?id:0)
-
-            }} style={{ color: "white" }} />
+            <FavoriteBorderIcon
+              data-testid={"favourite-icon"}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleFavouriteClick(id ? id : 0);
+              }}
+              style={{ color: "white" }}
+            />
           )}
         </Box>
       </Box>
