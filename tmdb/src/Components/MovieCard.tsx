@@ -33,6 +33,11 @@ const MovieCard = ({
         //width: "260px",
         background: "#343434",
         border: "1px solid grey",
+        transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+        "&:hover": {
+          transform: "scale(1.08)",
+          boxShadow: "0 0 20px 0 rgba(0, 0, 0, 0.3)",
+        },
       }}
       onClick={(e) => {
         handleCardClick(id ? id : 0, favourite);
