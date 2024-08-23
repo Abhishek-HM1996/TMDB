@@ -29,3 +29,10 @@ export interface trendingMovieDetailType{
     "vote_count": number|null,
     "favourite":boolean
 }
+
+export interface genresType {
+    
+        "id": number|null,
+        "name": string
+    
+}
